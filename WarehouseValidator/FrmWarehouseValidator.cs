@@ -23,7 +23,15 @@ namespace WarehouseValidator
         {
             if (txtScan.Text.StartsWith("A") || txtScan.Text.StartsWith("a"))
             {
-
+                int i = 0;
+                foreach (var licensePlateName in lstLicensePlates.Items)
+                {
+                    if (txtScan.Text == lstLicensePlates.Items[i].ToString())
+                    {
+                        //lstLicensePlates.Items[i].BackColor = ;
+                    }
+                    i++;
+                }
             }
             else if (txtScan.Text.StartsWith("P") || txtScan.Text.StartsWith("p"))
             {
@@ -39,14 +47,20 @@ namespace WarehouseValidator
                 licensePlates = ReadCSVFile(licensePlates);
 
                 List<string> licensePlateNames = new List<string>();
+                int i = 0;
+
                 foreach (var licensePlate in licensePlates)
                 {
-                    licensePlateNames.Add(licensePlate.Name);
+                    if (txtScan.Text == licensePlates[i].LocationName)
+                    {
+                        licensePlateNames.Add(licensePlate.Name);
+                    }
+                    i++;
                 }
 
                 lstLicensePlates.DataSource = licensePlateNames;
+                lstLicensePlates.ClearSelected();
 
-                lstLicensePlates.SelectedIndex = -1;
                 txtScan.Text = "";
                 txtScan.Focus();
             }
@@ -56,9 +70,9 @@ namespace WarehouseValidator
         {
             licensePlates = File.ReadAllLines("C:\\code\\WarehouseValidator\\WarehouseValidator\\" +
                                               "Warehouse LP List - JWMS.csv")
-                .Skip(1)
-                .Select(l => LicensePlate.FromCSV(l))
-                .ToList();
+                                .Skip(1)
+                                .Select(l => LicensePlate.FromCSV(l))
+                                .ToList();
             return licensePlates;
         }
     }
