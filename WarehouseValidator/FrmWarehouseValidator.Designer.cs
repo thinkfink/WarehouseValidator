@@ -35,6 +35,8 @@ namespace WarehouseValidator
             this.lblAmountScanned = new System.Windows.Forms.Label();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtScan
@@ -94,12 +96,32 @@ namespace WarehouseValidator
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(48, 355);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(218, 15);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Click the Import button to import LP list";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(48, 382);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(232, 15);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Click the Export button to save error report";
+            // 
             // FrmWarehouseValidator
             // 
             this.AcceptButton = this.btnSubmit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 346);
+            this.ClientSize = new System.Drawing.Size(325, 417);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblAmountScanned);
@@ -121,6 +143,8 @@ namespace WarehouseValidator
         private System.Windows.Forms.Label lblAmountScanned;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

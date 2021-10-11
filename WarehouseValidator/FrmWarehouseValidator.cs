@@ -124,7 +124,7 @@ namespace WarehouseValidator
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Title = "Save As";
-            dialog.FileName = "WarehouseValidator_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
+            dialog.FileName = "WarehouseValidator_" + DateTime.Now.ToString("M-dd-yyyy_H.mm.ss");
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -168,6 +168,7 @@ namespace WarehouseValidator
                 {
                     MessageBox.Show("File not found.");
                 }
+                lblAmountScanned.Text = amountScanned.ToString() + "/" + amountTotal.ToString() + " Scanned";
             }
             else
             {
