@@ -12,7 +12,6 @@ namespace WarehouseValidator.Models
         public string PartDescription { get; set; }
         public string Qty { get; set; }
         public string LotNumber { get; set; }
-        public string ReceiptNumber { get; set; }
         public string LocationName { get; set; }
         public static LicensePlate FromCSV(string csvLine)
         {

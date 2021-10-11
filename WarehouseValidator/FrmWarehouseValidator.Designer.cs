@@ -32,6 +32,9 @@ namespace WarehouseValidator
             this.txtScan = new System.Windows.Forms.TextBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.lstLicensePlates = new System.Windows.Forms.ListBox();
+            this.lblAmountScanned = new System.Windows.Forms.Label();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtScan
@@ -58,17 +61,48 @@ namespace WarehouseValidator
             this.lstLicensePlates.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lstLicensePlates.FormattingEnabled = true;
             this.lstLicensePlates.ItemHeight = 18;
-            this.lstLicensePlates.Location = new System.Drawing.Point(51, 41);
+            this.lstLicensePlates.Location = new System.Drawing.Point(51, 62);
             this.lstLicensePlates.Name = "lstLicensePlates";
             this.lstLicensePlates.Size = new System.Drawing.Size(225, 234);
             this.lstLicensePlates.TabIndex = 2;
+            // 
+            // lblAmountScanned
+            // 
+            this.lblAmountScanned.AutoSize = true;
+            this.lblAmountScanned.Location = new System.Drawing.Point(51, 41);
+            this.lblAmountScanned.Name = "lblAmountScanned";
+            this.lblAmountScanned.Size = new System.Drawing.Size(0, 15);
+            this.lblAmountScanned.TabIndex = 3;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(201, 311);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 4;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(51, 311);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.TabIndex = 5;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // FrmWarehouseValidator
             // 
             this.AcceptButton = this.btnSubmit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 328);
+            this.ClientSize = new System.Drawing.Size(325, 346);
+            this.Controls.Add(this.btnImport);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.lblAmountScanned);
             this.Controls.Add(this.lstLicensePlates);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.txtScan);
@@ -84,6 +118,9 @@ namespace WarehouseValidator
         private System.Windows.Forms.TextBox txtScan;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.ListBox lstLicensePlates;
+        private System.Windows.Forms.Label lblAmountScanned;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
     }
 }
 
