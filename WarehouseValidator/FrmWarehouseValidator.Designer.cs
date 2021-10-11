@@ -41,6 +41,7 @@ namespace WarehouseValidator
             // 
             // txtScan
             // 
+            this.txtScan.BackColor = System.Drawing.Color.White;
             this.txtScan.Location = new System.Drawing.Point(51, 12);
             this.txtScan.Name = "txtScan";
             this.txtScan.Size = new System.Drawing.Size(225, 23);
@@ -60,12 +61,12 @@ namespace WarehouseValidator
             // 
             this.lstLicensePlates.BackColor = System.Drawing.SystemColors.Menu;
             this.lstLicensePlates.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lstLicensePlates.Font = new System.Drawing.Font("Trebuchet MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lstLicensePlates.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lstLicensePlates.FormattingEnabled = true;
-            this.lstLicensePlates.ItemHeight = 18;
+            this.lstLicensePlates.ItemHeight = 15;
             this.lstLicensePlates.Location = new System.Drawing.Point(51, 62);
             this.lstLicensePlates.Name = "lstLicensePlates";
-            this.lstLicensePlates.Size = new System.Drawing.Size(225, 234);
+            this.lstLicensePlates.Size = new System.Drawing.Size(225, 225);
             this.lstLicensePlates.TabIndex = 2;
             // 
             // lblAmountScanned

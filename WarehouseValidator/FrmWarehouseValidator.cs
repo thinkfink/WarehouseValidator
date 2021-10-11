@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseValidator.Models;
@@ -19,7 +22,7 @@ namespace WarehouseValidator
         string scannedLocation;
 
         List<LicensePlate> licensePlates = new List<LicensePlate>();
-        List<Error> errors = new List<Error>();
+        List<Scan> scans = new List<Scan>();
         List<string> alreadyScannedLPs = new List<string>();
 
         public void ClearTextbox()
@@ -33,41 +36,40 @@ namespace WarehouseValidator
             InitializeComponent();
         }
 
-        //TODO: validate if lot number was scanned
-
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (txtScan.Text.StartsWith("A") || txtScan.Text.StartsWith("a"))
             {
                 if (lstLicensePlates.Items.Contains(txtScan.Text) && !alreadyScannedLPs.Contains(txtScan.Text))
                 {
+                    txtScan.BackColor = Color.LightGreen;
+
+                    Scan scan = new Scan();
+                    scan.LicensePlateName = txtScan.Text;
+                    scan.SystemLocationName = scannedLocation;
+                    scan.ScannedLocationName = scannedLocation;
+                    scan.Match = "Y";
+                    scans.Add(scan);
+
                     alreadyScannedLPs.Add(txtScan.Text);
                     amountScanned++;
                 }
+                else if (lstLicensePlates.Items.Contains(txtScan.Text) && alreadyScannedLPs.Contains(txtScan.Text))
+                {
+                    ClearTextbox();
+                }
                 else
                 {
-                    Error error = new Error();
-                    error.LicensePlateName = txtScan.Text;
-                    error.LocationName = scannedLocation;
-                    errors.Add(error);
-                }
+                    txtScan.BackColor = Color.Red;
 
-                /*int i = 0;
-                foreach (var licensePlateName in lstLicensePlates.Items)
-                {
-                    if (txtScan.Text == lstLicensePlates.Items[i].ToString())
-                    {
-                        
-                    }
-                    else
-                    {
-                        Error error = new Error();
-                        error.LicensePlateName = txtScan.Text;
-                        error.LocationName = scannedLocation;
-                        errors.Add(error);
-                    }
-                    i++;
-                }*/
+                    Scan scan = new Scan();
+                    scan.LicensePlateName = txtScan.Text;
+                    var lp = licensePlates.FirstOrDefault(l => l.Name == txtScan.Text);
+                    scan.SystemLocationName = lp.LocationName;
+                    scan.ScannedLocationName = scannedLocation;
+                    scan.Match = "N";
+                    scans.Add(scan);
+                }
 
                 lblAmountScanned.Text = amountScanned.ToString() + "/" + amountTotal.ToString() + " Scanned";
 
@@ -83,9 +85,11 @@ namespace WarehouseValidator
             }
             else
             {
+                txtScan.BackColor = Color.White;
+
                 alreadyScannedLPs = new List<string>();
+                amountScanned = 0;
                 scannedLocation = txtScan.Text;
-                //licensePlates = ReadCSVFile(licensePlates);
 
                 List<string> licensePlateNames = new List<string>();
 
@@ -110,41 +114,6 @@ namespace WarehouseValidator
             }
         }
 
-        /*public static List<LicensePlate> ReadCSVFile(List<LicensePlate> licensePlates)
-        {
-            licensePlates = File.ReadAllLines("C:\\code\\WarehouseValidator\\WarehouseValidator\\" +
-                                              "Warehouse LP List - JWMS.csv")
-                                .Skip(1)
-                                .Select(l => LicensePlate.FromCSV(l))
-                                .ToList();
-            return licensePlates;
-        }*/
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Title = "Save As";
-            dialog.FileName = "WarehouseValidator_" + DateTime.Now.ToString("M-dd-yyyy_H.mm.ss");
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                StreamWriter writer = File.CreateText(dialog.FileName);
-                writer.WriteLine("License Plate,Location Scanned");
-
-                int i = 0;
-                foreach (var error in errors)
-                {
-                    writer.WriteLine(errors[i].LicensePlateName.ToString() + "," + errors[i].LocationName.ToString());
-                    i++;
-                }
-                writer.Dispose();
-            }
-            else
-            {
-                MessageBox.Show("Export unsuccessful.");
-            }
-        }
-
         private void btnImport_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -157,7 +126,6 @@ namespace WarehouseValidator
                 if (File.Exists(dialog.FileName))
                 {
                     StreamReader reader = File.OpenText(dialog.FileName);
-                    //licensePlates = ReadCSVFile(licensePlates);
                     licensePlates = File.ReadAllLines(dialog.FileName)
                                 .Skip(1)
                                 .Select(l => LicensePlate.FromCSV(l))
@@ -173,6 +141,34 @@ namespace WarehouseValidator
             else
             {
                 MessageBox.Show("No file selected.");
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Save As";
+            dialog.Filter = "CSV Files|*.csv";
+            dialog.Filter += "|Excel Files|*.xlsx";
+            dialog.FileName = "WarehouseValidator_" + DateTime.Now.ToString("M-dd-yyyy_H.mm.ss") + ".csv";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = File.CreateText(dialog.FileName);
+                writer.WriteLine("License Plate,System Location,Scanned Location,Match Y/N");
+
+                int i = 0;
+                foreach (var scan in scans)
+                {
+                    writer.WriteLine(scans[i].LicensePlateName + "," + scans[i].SystemLocationName + "," + scans[i].ScannedLocationName + "," + scans[i].Match);
+                    i++;
+                }
+
+                writer.Dispose();
+            }
+            else
+            {
+                MessageBox.Show("Export unsuccessful.");
             }
         }
     }
