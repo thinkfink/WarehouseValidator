@@ -64,8 +64,15 @@ namespace WarehouseValidator
 
                     Scan scan = new Scan();
                     scan.LicensePlateName = txtScan.Text;
-                    var lp = licensePlates.FirstOrDefault(l => l.Name == txtScan.Text);
-                    scan.SystemLocationName = lp.LocationName;
+                    try
+                    {
+                        var lp = licensePlates.FirstOrDefault(l => l.Name == txtScan.Text);
+                        scan.SystemLocationName = lp.LocationName;
+                    }
+                    catch (Exception)
+                    {
+                        scan.SystemLocationName = "";
+                    }
                     scan.ScannedLocationName = scannedLocation;
                     scan.Match = "N";
                     scans.Add(scan);
